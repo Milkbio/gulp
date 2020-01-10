@@ -1,3 +1,4 @@
+import os from 'os';
 import gulp from 'gulp';
 import less from 'gulp-less';
 import babel from 'gulp-babel';
@@ -27,9 +28,25 @@ const paths = {
 	},
 	html: {
 		src: 'src/index.html',
-		dest: 'dist/'
+		dest: 'dist/index.html'
 	}
 };
+
+// 获取系统ip
+const netInfo = os.networkInterfaces(); // 网络信息
+let ip = '';
+if (os.type() === 'Windows_NT') {
+	for (let dev in netInfo) {
+		if (dev === 'WLAN') {
+			for (let j = 0; j < netInfo[dev].length; j++) {
+				if (netInfo[dev][j].family === 'IPv4') {
+					ip = netInfo[dev][j].address;
+					break;
+				}
+			}
+		}
+	}
+}
 
 export const clean = () => del([ 'dist' ]);
 
@@ -84,6 +101,7 @@ export { watchFiles as watch };
 export function webServer() {
 	return gulp.src('src')
 			.pipe(server({
+				host: ip,
 				defaultFile: 'index.html',
 				livereload: true,
 				open: true
