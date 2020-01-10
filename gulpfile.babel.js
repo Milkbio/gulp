@@ -9,6 +9,7 @@ import imagemin from 'gulp-imagemin';
 import runSequence from 'run-sequence';
 import rev from 'gulp-rev';
 import revCollector from 'gulp-rev-collector';
+import server from 'gulp-server-livereload'
 import del from 'del';
 
 const paths = {
@@ -79,6 +80,15 @@ function watchFiles() {
 	gulp.watch(paths.images.src, images);
 }
 export { watchFiles as watch };
+
+export function webServer() {
+	return gulp.src('src')
+			.pipe(server({
+				defaultFile: 'index.html',
+				livereload: true,
+				open: true
+			}));
+}
 
 const build = gulp.series(clean, gulp.parallel(styles, scripts, images), revHtml);
 export default build;
