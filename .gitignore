@@ -6,3 +6,4 @@ yarn-error.log*
 .idea/
 test/e2e/reports
 selenium-debug.log
+dist/
