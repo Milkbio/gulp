@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const chalk = require('chalk');
 const del = require('del');
+const browserSync = require("browser-sync").get('rootServer');
 const plugins = require('gulp-load-plugins')();
 
 const {outputPath, cssFilesPath} = require('../filesPath');
@@ -20,5 +21,6 @@ module.exports = async function () {
     .pipe(plugins.rev())
     .pipe(gulp.dest(outputPath))
     .pipe(plugins.rev.manifest('rev-css-manifest.json')) //生成一个rev-manifest.json
-    .pipe(gulp.dest(outputPath + 'rev')); //将 rev-manifest.json 保存到 rev 目录内
+    .pipe(gulp.dest(outputPath + 'rev')) //将 rev-manifest.json 保存到 rev 目录内
+    .pipe(browserSync.reload({ stream: true })) // 以流的方式往浏览器推，每次任务执行完，都自动reload一下
 }

@@ -1,6 +1,7 @@
 const {series, parallel, watch} = require('gulp');
 const chalk = require('chalk');
 const del = require('del');
+const browserSync = require('browser-sync').create('rootServer');
 
 const {
   outputPath,
@@ -10,10 +11,13 @@ const {
   imgFilesPath
 } = require('./filesPath');
 
-const taskCss = require('./tasks/css');
-const taskJs = require('./tasks/js');
-const taskImg = require('./tasks/img');
-const taskHTML = require('./tasks/html');
+const {
+  taskCss,
+  taskJs,
+  taskImg,
+  taskHTML,
+  taskServer
+} = require('./tasks');
 
 // 清理dist
 async function clean() {
@@ -25,18 +29,22 @@ async function clean() {
 
 // 监控文件修改
 async function taskWatch() {
+  taskServer();
   watch(cssFilesPath, taskCss);
   watch(jsFilesPath, taskJs);
   watch(imgFilesPath, taskImg);
   watch(htmlFilesPath, taskHTML);
 }
 
+
 // tasks
-exports.taskClean = clean;
-exports.taskCss = taskCss;
-exports.taskJs = taskJs;
-exports.taskImg = taskImg;
-exports.taskHTML = taskHTML;
+Object.assign(exports, {
+  taskClean: clean,
+  taskCss,
+  taskJs,
+  taskImg,
+  taskHTML
+});
 exports.default = series(clean, parallel(
   taskCss,
   taskJs,

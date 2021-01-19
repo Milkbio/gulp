@@ -8,7 +8,7 @@ const {
   revFilesPath
 } = require('../filesPath');
 
-module.exports = function () {
+module.exports = async function () {
   console.log(chalk.bgYellow.black('执行html任务'));
   return gulp.src([revFilesPath, htmlFilesPath])
     .pipe(plugins.revCollector())
