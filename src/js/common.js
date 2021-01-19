@@ -1,2 +1,3 @@
-document.onclick = function() {
+document.onclick = () => {
+  console.log(document);
 }
