@@ -5,7 +5,7 @@ yarn-debug.log*
 yarn-error.log*
 .test/
 .idea/
-.test2/
+.tesdd...afdaft2/
 test/e2e/reports
 selenium-debug.log
 dist/
