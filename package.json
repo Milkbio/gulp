@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "gulp -f gulpfile.babel.js webServer",
-    "gulp:watch": "gulp -f gulpfile.babel.js watch",
+    "dev": "gulp -f gulpfile.bak/gulpfile.babel.js webServer",
+    "gulp:watch": "gulp -f gulpfile.bak/gulpfile.babel.js watch",
     "build": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
