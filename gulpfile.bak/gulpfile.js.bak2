@@ -1,0 +1,78 @@
+const path = require('path');
+const gulp = require('gulp');
+const plugins = require('gulp-load-plugins')();
+const {
+  sass,
+  rename,
+  uglify,
+  concat,
+  cleanCss,
+  htmlmin
+} = plugins;
+const del = require('del');
+const chalk = require('chalk');
+
+const browserSync = require('browser-sync').create();
+
+const outputPath = 'dist';
+const jsFilesPath = 'src/**/*.js';
+const cssFilesPath = 'src/**/*.+(scss|sass)';
+const htmlFilesPath = 'src/*.html'
+
+gulp.task('clean', async function () {
+  console.log(chalk.yellow('----------开始清理dist目录------------'))
+  return await del(outputPath)
+})
+
+gulp.task('js', function () {
+  console.log(chalk.white.bgBlack('执行js任务'));
+  gulp.src(jsFilesPath)
+    .pipe(concat('js/bundle.js'))
+    .pipe(uglify())
+    .pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest(outputPath))
+    .pipe(browserSync.reload({
+      stream: true
+    }))
+})
+
+gulp.task('css', function () {
+  console.log(chalk.bgCyan('执行css任务'));
+  gulp.src(cssFilesPath)
+    .pipe(sass())
+    .pipe(concat('css/app.css'))
+    .pipe(cleanCss())
+    .pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest(outputPath))
+    .pipe(browserSync.reload({
+      stream: true
+    }))
+})
+
+gulp.task('html', function () {
+  console.log(chalk.bgGreen('执行html任务'));
+  gulp.src(htmlFilesPath)
+    .pipe(htmlmin({collapseWhitespace:true}))
+    .pipe(gulp.dest(outputPath))
+})
+
+gulp.task('browserSync',function () {
+  return browserSync.init({
+    server: {
+      baseDir:'src'
+    }
+  })
+})
+
+gulp.task('watch', ['browserSync'], function () {
+  gulp.watch(cssFilesPath, ['css']);
+  gulp.watch(jsFilesPath, ['js']);
+  gulp.watch(htmlFilesPath, ['html']).on('change', browserSync.reload);
+  console.log(chalk.bgGreenBright('开始监听文件改变'));
+})
+
+gulp.task('build', ['clean', 'js', 'css', 'html'], function () {
+  console.log('执行build')
+})
+
+gulp.task('default', ['build', 'watch'])

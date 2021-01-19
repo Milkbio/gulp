@@ -4,33 +4,32 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "gulp -f gulpfile.bak/gulpfile.babel.js webServer",
-    "gulp:watch": "gulp -f gulpfile.bak/gulpfile.babel.js watch",
-    "build": "gulp",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp -f gulpfile",
+    "start:clean": "gulp -f gulpfile taskClean",
+    "start:taskJs": "gulp -f gulpfile taskJs",
+    "start:taskCss": "gulp -f gulpfile taskCss",
+    "start:taskImg": "gulp -f gulpfile taskImg",
+    "start:taskHTML": "gulp -f gulpfile taskHTML"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/register": "^7.7.7",
-    "delete": "^1.1.0",
+    "chalk": "^4.1.0",
+    "del": "^6.0.0",
     "gulp": "^4.0.2",
-    "gulp-rename": "^2.0.0",
-    "gulp-rev": "^9.0.0",
-    "gulp-rev-collector": "^1.3.1",
-    "gulp-server-livereload": "^1.9.2",
-    "gulp-uglify": "^3.0.2",
-    "require-dir": "^1.2.0",
-    "run-sequence": "^2.2.1"
-  },
-  "dependencies": {
-    "del": "^5.1.0",
-    "gulp-babel": "^8.0.0",
-    "gulp-clean-css": "^4.2.0",
+    "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
-    "gulp-imagemin": "^6.2.0",
-    "gulp-less": "^4.0.1"
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-load-plugins": "^2.0.6",
+    "gulp-remove-empty-lines": "^0.1.0",
+    "gulp-remove-html": "^1.3.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-rev": "^9.0.0",
+    "gulp-rev-collector": "^1.3.3",
+    "gulp-sass": "^4.1.0",
+    "gulp-uglify": "^3.0.2",
+    "readable-stream": "^3.6.0"
   }
 }
